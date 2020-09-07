@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import sequelize from "../sequelize/admin.sequelize";
+import { adminConnection } from "#root/db/connections";
 
 class User extends Model {
   public id!: number;
@@ -16,6 +16,7 @@ User.init(
     },
     login: {
       type: DataTypes.STRING,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
@@ -23,7 +24,7 @@ User.init(
   },
   {
     tableName: "products",
-    sequelize: sequelize,
+    sequelize: adminConnection,
   }
 );
 

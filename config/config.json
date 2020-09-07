@@ -1,0 +1,15 @@
+{
+  "development": {
+    "dialect": "sqlite",
+    "seederStorage": "sequelize",
+    "storage": "./_sqlite/dev.admin.sqlite"
+  },
+  "test": {
+    "dialect": "sqlite",
+    "storage": "./_sqlite/test.admin.sqlite"
+  },
+  "production": {
+    "dialect": "sqlite",
+    "storage": "./_sqlite/admin.sqlite"
+  }
+}

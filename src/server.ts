@@ -1,6 +1,6 @@
 import http from "http";
 
-import expressApp from "./express";
+import expressApp from "#root/express";
 
 const server = http.createServer(expressApp);
 

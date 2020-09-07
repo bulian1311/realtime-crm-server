@@ -1,9 +1,5 @@
-import dotenv from "dotenv";
-import { authenticate } from "./sequelize";
+import "dotenv/config";
+import { adminConnection } from "#root/db/connections";
 
-import "./server";
-import "./sockets";
-
-dotenv.config();
-
-authenticate();
+import "#root/server";
+import "#root/sockets";

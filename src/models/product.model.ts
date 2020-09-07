@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import sequelize from "../sequelize/general.sequelize";
+import { generalConnection } from "#root/db/connections";
 
 class Product extends Model {
   public id!: number;
@@ -37,7 +37,7 @@ Product.init(
   },
   {
     tableName: "products",
-    sequelize: sequelize,
+    sequelize: generalConnection,
   }
 );
 
