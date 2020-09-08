@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports.up = (qeryInterface, DataTypes) => {
   return qeryInterface.createTable(
     "users",

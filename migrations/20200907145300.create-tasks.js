@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports.up = (qeryInterface, DataTypes) => {
   return qeryInterface.createTable(
     "tasks",
@@ -8,13 +10,16 @@ module.exports.up = (qeryInterface, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER.UNSIGNED,
       },
-      cilumnId: {
+      columnId: {
         allowNull: false,
         references: {
           key: "id",
-          model: "columns",
+          model: {
+            tableName: "columns",
+          },
         },
         type: DataTypes.INTEGER.UNSIGNED,
+        onDelete: "CASCADE",
       },
       name: {
         allowNull: false,

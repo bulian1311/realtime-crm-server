@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
-import passport from "../passport";
+import passport from "#root/passport";
 
 export const loginLocal = asyncHandler(async (req, res, next) => {
   await passport.authenticate("local", (err, user) => {

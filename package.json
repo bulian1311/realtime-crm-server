@@ -6,13 +6,11 @@
   "scripts": {
     "db:migrate": "sequelize db:migrate",
     "db:migrate:undo": "sequelize db:migrate:undo",
+    "db:seed": "sequelize db:seed:all",
+    "db:seed:undo": "sequelize db:seed:all:undo",
     "start": "node dist/index.js",
     "start:dev": "nodemon index.dev.ts",
     "build": "tsc -p ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "\u0016https://github.com/magmer1311/magmer-server.git"
   },
   "author": "Nikolay Kachanov",
   "license": "ISC",
