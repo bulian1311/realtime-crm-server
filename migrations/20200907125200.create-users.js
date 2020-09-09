@@ -14,7 +14,11 @@ module.exports.up = (qeryInterface, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      password: {
+      passwordHash: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      salt: {
         allowNull: false,
         type: DataTypes.STRING,
       },

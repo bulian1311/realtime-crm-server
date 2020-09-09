@@ -2,27 +2,26 @@ import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
 import passport from "#root/passport";
 
-export const loginLocal = asyncHandler(async (req, res, next) => {
-  await passport.authenticate("local", (err, user) => {
-    if (user == false) {
-      res.send("Login failed");
+import accessEnv from "#root/hellpers/accessEnv";
+
+export const signIn = asyncHandler(async (req, res, next) => {
+  passport.authenticate("local", (err, user) => {
+    if (err) return next(err);
+
+    if (!user) {
+      res.send("Auth failed");
     } else {
       const payload = {
         id: user.id,
-        displayName: user.displayName,
-        email: user.email,
+        login: user.login,
       };
-      const token = jwt.sign(payload, process.env.JWT_SECRET || "qqq");
+      const token: string = jwt.sign(payload, accessEnv("JWT_SECRET"));
 
-      res.send({ user: user.displayName, token: "JWT " + token });
+      res.send({ user: user.login, token });
     }
-  });
+  })(req, res, next);
 });
 
-export const loginJwt = asyncHandler(async (req, res, next) => {
-  await passport.authenticate("jwt", {
-    successRedirect: "/",
-    failureRedirect: "/login",
-    failureFlash: true,
-  });
-});
+export const signUp = asyncHandler(async (req, res, next) => {});
+
+export const signOut = asyncHandler(async (req, res, next) => {});

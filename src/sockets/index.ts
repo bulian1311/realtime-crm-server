@@ -25,7 +25,7 @@ io.on(
   "connection",
   socketioJwt.authorize({
     secret: process.env.JWT_SECRET || "qqq",
-    timeout: 15000,
+    timeout: 30000,
   })
 ).on("authenticated", (socket: any) => {
   console.log(

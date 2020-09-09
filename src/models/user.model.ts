@@ -8,6 +8,7 @@ import {
   HasManyCountAssociationsMixin,
   HasManyCreateAssociationMixin,
 } from "sequelize";
+import crypto from "crypto";
 
 import { adminConnection } from "#root/db/connections";
 import Column from "./column.model";
@@ -15,7 +16,8 @@ import Column from "./column.model";
 class User extends Model {
   public id!: number;
   public login!: string;
-  public password!: string;
+  public passwordHash!: string;
+  public salt!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -32,6 +34,22 @@ class User extends Model {
   public static associations: {
     columns: Association<User, Column>;
   };
+
+  public async generatePassword(password: string) {
+    this.salt = crypto.randomBytes(128).toString("base64");
+    this.passwordHash = crypto
+      .pbkdf2Sync(password, this.salt, 1, 128, "sha1")
+      .toString("hex");
+  }
+
+  public async checkPassword(password: string) {
+    if (!password) return false;
+    if (!this.passwordHash) return false;
+    return (
+      crypto.pbkdf2Sync(password, this.salt, 1, 128, "sha1").toString("hex") ===
+      this.passwordHash
+    );
+  }
 }
 
 User.init(
@@ -45,7 +63,10 @@ User.init(
       type: DataTypes.STRING,
       unique: true,
     },
-    password: {
+    passwordHash: {
+      type: DataTypes.STRING,
+    },
+    salt: {
       type: DataTypes.STRING,
     },
     createdAt: {
@@ -59,7 +80,7 @@ User.init(
     },
   },
   {
-    tableName: "products",
+    tableName: "users",
     sequelize: adminConnection,
   }
 );
