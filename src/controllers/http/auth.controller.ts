@@ -17,7 +17,7 @@ export const signIn = asyncHandler(async (req, res, next) => {
       };
       const token: string = jwt.sign(payload, accessEnv("JWT_SECRET"));
 
-      res.send({ user: user.login, token });
+      res.send({ login: user.login, token });
     }
   })(req, res, next);
 });

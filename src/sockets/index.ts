@@ -3,6 +3,8 @@ import socketioJwt from "socketio-jwt";
 
 import server from "#root/server";
 
+import accessEnv from "#root/hellpers/accessEnv";
+
 const io = socketIo(server);
 
 // io.on("connection", (socket) => {
@@ -17,20 +19,18 @@ const io = socketIo(server);
 
 const getApiAndEmit = (socket: any) => {
   const response = new Date().getSeconds();
-  socket.emit("FromAPI", response);
+  socket.emit("qqq", response);
 };
 
 //Auth....................
 io.on(
   "connection",
   socketioJwt.authorize({
-    secret: process.env.JWT_SECRET || "qqq",
-    timeout: 30000,
+    secret: accessEnv("JWT_SECRET"),
+    timeout: 15000,
   })
 ).on("authenticated", (socket: any) => {
-  console.log(
-    "this is the name from the JWT: " + socket.decoded_token.displayName
-  );
+  console.log("this is the name from the JWT: " + socket.decoded_token);
 
   setInterval(() => getApiAndEmit(socket), 1000);
 

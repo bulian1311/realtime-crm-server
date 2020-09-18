@@ -37,9 +37,7 @@ passport.use(
   new JwtStrategy(jwtOptions, (payload, done) => {
     User.findByPk(payload.id)
       .then((user) => {
-        if (!user) {
-          done(null, false);
-        }
+        if (!user) done(null, false);
 
         done(null, user);
       })
